@@ -14,22 +14,6 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.GestureDetector;
 
-/**
- * Created by abhiraj.kumar on 6/7/17.
- */
-
-
-
-
-enum FoodType{
-    Poison,
-    Healthy
-}
-
-
-
-
-
 
 class  GameView extends SurfaceView implements Runnable {
 
@@ -227,10 +211,12 @@ class  GameView extends SurfaceView implements Runnable {
                         roundXValue = itemSize/3;
                         roundYValue = itemSize/3;
                         sizeReduction = 0;
+                        this.drawHead(pixelPosition.x,  pixelPosition.y , pixelPosition.x + itemSize, pixelPosition.y + itemSize,paint);
                         //paint.setColor(Color.rgb(0, 0, 0));
 
+                    }else {
+                        canvas.drawRoundRect(pixelPosition.x + sizeReduction, pixelPosition.y + sizeReduction, pixelPosition.x + itemSize - sizeReduction, pixelPosition.y + itemSize - sizeReduction, roundXValue, roundYValue, paint);
                     }
-                    canvas.drawRoundRect(pixelPosition.x+sizeReduction, pixelPosition.y+sizeReduction, pixelPosition.x + itemSize-sizeReduction, pixelPosition.y + itemSize-sizeReduction,roundXValue,roundYValue, paint);
                 }
             }else{
                 canvas.drawText("Game Over"  , 50, 120, paint);
@@ -238,13 +224,39 @@ class  GameView extends SurfaceView implements Runnable {
             }
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
-            canvas.drawRect(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint);
+            this.drawFood(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint);
 
 
             // Draw everything to the screen
             ourHolder.unlockCanvasAndPost(canvas);
         }
 
+    }
+
+
+
+    public void drawHead(int x, int y, int x2, int y2, Paint paint){
+        canvas.drawRoundRect(x,y,x2,y2, (x2-x)/3,(x2-x)/3,paint);
+        paint.setColor(Color.rgb(136, 196, 96));
+        int midX =  (x+x2)/2;
+        int midY =  (y + y2)/2;
+        canvas.drawCircle(midX,midY,(x2-x)/8,paint);
+
+    }
+
+    public void drawFood(int x, int y, int x2, int y2, Paint paint){
+
+        int midX =  (x+x2)/2;
+        int midY =  (y + y2)/2;
+        paint.setColor(Color.rgb(136, 196, 96));
+        canvas.drawRect(x,y,x2,y2,paint);
+        paint.setColor(Color.rgb(0,0,0));
+        //canvas.drawRect(midX ,y,x2,midY,paint);
+        canvas.drawArc(midX,y,x2,midY,225,180,true,paint);
+        canvas.drawArc(x,midY,midX,y2,45,180,true,paint);
+        canvas.drawArc(x,y,midX,midY,135,180,true,paint);
+        canvas.drawArc(midX,midY,x2,y2,315,180,true,paint);
+        canvas.drawCircle(midX,midY,(x2-x)/6,paint);
     }
 
     // If SimpleGameEngine Activity is paused/stopped
@@ -355,7 +367,7 @@ class  GameView extends SurfaceView implements Runnable {
     private void foodEaten(){
         snakePoints.add(0,snakePoints.get(0));
         food.updateFood();
-        //drawFood();
+
 
     }
 
@@ -364,28 +376,5 @@ class  GameView extends SurfaceView implements Runnable {
      * Created by abhiraj.kumar on 6/10/17.
      */
 
-    static class Food{
 
-
-
-        QunatisedPosition position;
-        FoodType type;
-
-        private void updateFood(){
-            int randomNumX =  (int)(Math.random() * 10000);
-            int randomNumY =  (int)(Math.random() * 10000);
-            position = new QunatisedPosition(randomNumX,randomNumY);
-
-        }
-
-        Food(){
-            type = FoodType.Healthy;
-            updateFood();
-        }
-
-
-
-
-
-    }
 }
