@@ -18,45 +18,38 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader.TileMode;
 
 
-class  GameView extends SurfaceView implements Runnable {
+class GameView extends SurfaceView {
 
 
     GestureDetector gestureDetector;
     boolean isGameOver = false;
-
-
-
-
-    private boolean shouldShowFPS = false;
-    private Food food = new Food();
-    private ArrayList<QunatisedPosition> snakePoints;
     MotionDirection direction = new MotionDirection(DirectionSign.ZERO,DirectionSign.POSITIVE);
     Point touchPointStart;
+    SurfaceHolder ourHolder;
+    // A Canvas and a Paint object
+    Canvas canvas;
     // This is our thread
-    Thread gameThread = null;
+
 
 
     //Point foodPoint;
-
-    SurfaceHolder ourHolder;
+    Paint paint;
 
     // A boolean which we will set and unset
     // when the game is running- or not.
-    volatile boolean playing;
-
-    // A Canvas and a Paint object
-    Canvas canvas;
-    Paint paint;
+    //volatile boolean playing;
     Paint gradinetPaintGreen;
+    int count = 0;
+    //private boolean shouldShowFPS = false;
+    private Food food = new Food();
     //Paint gradinetPaintBlack;
 
     // This variable tracks the game frame rate
-    long fps;
+    //long fps;
    // frameDelay = 30;
-
-    int count = 0;
+    private ArrayList<QunatisedPosition> snakePoints;
     // This is used to help calculate the fps
-    private long timeThisFrame;
+    //private long timeThisFrame;
 
     // Declare an object of type Bitmap
 
@@ -86,7 +79,7 @@ class  GameView extends SurfaceView implements Runnable {
 
 
         // Set our boolean to true - game on!
-        playing = true;
+        //playing = true;
         makeSnake();
         int x1 = food.position.xOffset, y1 = food.position.yOffset, x2 = food.position.maximumXPoint,  y2 = food.position.maximumYPoint;
         Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
@@ -112,40 +105,7 @@ class  GameView extends SurfaceView implements Runnable {
 
 
 
-    @Override
-    public void run() {
-        while (playing) {
 
-            // Capture the current time in milliseconds in startFrameTime
-            long startFrameTime = System.currentTimeMillis();
-
-            // Update the frame
-            update();
-            draw();
-
-
-            // Calculate the fps this frame
-            // We can then use the result to
-            // time animations and more.
-            timeThisFrame = System.currentTimeMillis() - startFrameTime;
-            long desiredFrameRate = 10;
-            long extraTime;
-            extraTime = (1000/desiredFrameRate) - timeThisFrame;
-            if (extraTime >0) {
-                try {
-                    gameThread.sleep((long) extraTime);
-                } catch (InterruptedException e) {
-
-                }
-            }
-            timeThisFrame = System.currentTimeMillis() - startFrameTime;
-            if (timeThisFrame > 0) {
-                fps = 1000 / timeThisFrame;
-            }
-
-        }
-
-    }
 
     // Everything that needs to be updated goes in here
     // In later projects we will have dozens (arrays) of objects.
@@ -199,10 +159,10 @@ class  GameView extends SurfaceView implements Runnable {
             paint.setTextSize(45);
 
             // Display the current fps on the screen
-            if (shouldShowFPS) {
-                canvas.drawText("FPS:" + fps, 20, 40, paint);
-
-            }
+//            if (shouldShowFPS) {
+//                canvas.drawText("FPS:" + fps, 20, 40, paint);
+//
+//            }
 
 
 
@@ -273,25 +233,7 @@ class  GameView extends SurfaceView implements Runnable {
         canvas.drawCircle(midX,midY,(x2-x)/6,paint);
     }
 
-    // If SimpleGameEngine Activity is paused/stopped
-    // shutdown our thread.
-    public void pause() {
-        playing = false;
-        try {
-            gameThread.join();
-        } catch (InterruptedException e) {
-            Log.e("Error:", "joining thread");
-        }
 
-    }
-
-    // If SimpleGameEngine Activity is started then
-    // start our thread.
-    public void resume() {
-        playing = true;
-        gameThread = new Thread(this);
-        gameThread.start();
-    }
 
     // The SurfaceView class implements onTouchListener
     // So we can override this method and detect screen touches.
