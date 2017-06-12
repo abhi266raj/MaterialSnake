@@ -13,6 +13,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.GestureDetector;
+import android.graphics.Shader;
+import android.graphics.LinearGradient;
+import android.graphics.Shader.TileMode;
 
 
 class  GameView extends SurfaceView implements Runnable {
@@ -44,6 +47,8 @@ class  GameView extends SurfaceView implements Runnable {
     // A Canvas and a Paint object
     Canvas canvas;
     Paint paint;
+    Paint gradinetPaintGreen;
+    //Paint gradinetPaintBlack;
 
     // This variable tracks the game frame rate
     long fps;
@@ -76,12 +81,18 @@ class  GameView extends SurfaceView implements Runnable {
         ourHolder = getHolder();
         paint = new Paint();
 
+
         // Load Bob from his .png file
 
 
         // Set our boolean to true - game on!
         playing = true;
         makeSnake();
+        int x1 = food.position.xOffset, y1 = food.position.yOffset, x2 = food.position.maximumXPoint,  y2 = food.position.maximumYPoint;
+        Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
+        gradinetPaintGreen = new Paint();
+        gradinetPaintGreen.setShader(shader);
+
         //Bitmap.createBitmap(square,0,0,20,20);
         //mDrawable.getPaint().setColor(0xff74AC23);
 
@@ -173,7 +184,7 @@ class  GameView extends SurfaceView implements Runnable {
 
 
 
-            canvas.drawColor(Color.rgb(70, 70, 70));
+            canvas.drawColor(Color.argb(10,70, 70, 70));
 
             // Choose the brush color for drawing
             paint.setColor(Color.rgb(136, 196, 96));
@@ -192,7 +203,10 @@ class  GameView extends SurfaceView implements Runnable {
                 canvas.drawText("FPS:" + fps, 20, 40, paint);
 
             }
-            canvas.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,0,0, paint);
+
+
+
+            canvas.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
 
 
             paint.setColor(Color.rgb(70, 70, 70));
