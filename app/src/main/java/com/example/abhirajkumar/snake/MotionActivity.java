@@ -13,16 +13,18 @@ public class MotionActivity extends Activity {
     // gameView will be the view of the game
     // It will also hold the logic of the game
     // and respond to screen touches as well
-    GameView gameView;
+    GameEngine gameEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Initialize gameView and set it as the view
-        gameView = new GameView(this);
 
+        GameView gameView = new GameView(this);
+        gameEngine = new GameEngine(gameView);
         setContentView(gameView);
+        //setContentView(gameEngine.gameView);
 
     }
 
@@ -31,7 +33,7 @@ public class MotionActivity extends Activity {
         super.onResume();
 
         // Tell the gameView resume method to execute
-        gameView.resume();
+        gameEngine.resume();
     }
 
     // This method executes when the player quits the game
@@ -40,7 +42,7 @@ public class MotionActivity extends Activity {
         super.onPause();
 
         // Tell the gameView pause method to execute
-        gameView.pause();
+        gameEngine.pause();
     }
 
 }
