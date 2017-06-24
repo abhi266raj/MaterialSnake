@@ -16,6 +16,8 @@ import android.graphics.Shader;
 import android.graphics.LinearGradient;
 import android.graphics.Shader.TileMode;
 
+import static java.lang.String.*;
+
 
 class GameView extends SurfaceView {
 
@@ -109,7 +111,7 @@ class GameView extends SurfaceView {
     // Everything that needs to be updated goes in here
     // In later projects we will have dozens (arrays) of objects.
     // We will also do other things like collision detection.
-    public void update() {
+    public void update(GameData gameData) {
 
         // If bob is moving (the player is touching the screen)
         // then move him to the right based on his target speed and the current fps.
@@ -127,14 +129,14 @@ class GameView extends SurfaceView {
 
 
     QunatisedPosition newPoint = new QunatisedPosition(xPositionToChange + direction.xDirectionSign.value() ,yPositionToChange + direction.yDirectionSign.value());
-        willMoveToQuantisedPoint(newPoint);
+        willMoveToQuantisedPoint(newPoint,gameData);
     snakePoints.remove(0);
         snakePoints.add(newPoint);
 
     }
 
     // Draw the newly updated scene
-    public void draw() {
+    public void draw(GameData data) {
 
         if (ourHolder.getSurface().isValid()) {
 
@@ -164,11 +166,15 @@ class GameView extends SurfaceView {
 //            }
 
 
+            canvas.drawRoundRect(food.position.xOffset, food.position.scoreBoardStartY, food.position.maximumXPoint, food.position.scoreBoardEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+            float textHeight = food.position.scoreBoardEndY - food.position.scoreBoardStartY;
 
             canvas.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
 
 
             paint.setColor(Color.rgb(70, 70, 70));
+            paint.setTextSize((textHeight)/2);
+            canvas.drawText("Score = "+ valueOf(data.score), food.position.xOffset,  food.position.scoreBoardEndY - textHeight/4 , paint);
             paint.setStrokeWidth(10);
 
             int itemSize =  food.position.itemSize;
@@ -303,9 +309,10 @@ class GameView extends SurfaceView {
     }
 
 
-    private void willMoveToQuantisedPoint(QunatisedPosition point){
+    private void willMoveToQuantisedPoint(QunatisedPosition point,GameData gameData){
         if (point.x == food.position.x && point.y == food.position.y){
             foodEaten();
+            gameData.updateScore();
         }
 
 

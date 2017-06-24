@@ -13,8 +13,9 @@ public class GameEngine implements Runnable {
     long fps;
     volatile boolean playing;
     GameView gameView;
-    GameData gameData;
+    GameData gameData = new GameData();
     private long timeThisFrame;
+
 
 
     public GameEngine(GameView gameView) {
@@ -30,8 +31,8 @@ public class GameEngine implements Runnable {
             long startFrameTime = System.currentTimeMillis();
 
             // Update the frame
-            gameView.update();
-            gameView.draw();
+            gameView.update(gameData);
+            gameView.draw(gameData);
 
 
             // Calculate the fps this frame

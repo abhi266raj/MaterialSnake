@@ -11,7 +11,8 @@ public class QunatisedPosition{
     int x;
     int y;
 
-
+    int scoreBoardStartY;
+    int scoreBoardEndY;
 
     private int maxX;
     private int maxY;
@@ -56,10 +57,12 @@ public class QunatisedPosition{
         // getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 
         int minimumItemCount = 20;
-        int height = (90 * Resources.getSystem().getDisplayMetrics().heightPixels)/100;
+        int height = (80 * Resources.getSystem().getDisplayMetrics().heightPixels)/100;
         int width = (90 * Resources.getSystem().getDisplayMetrics().widthPixels)/100;
 
-        yOffset = (Resources.getSystem().getDisplayMetrics().heightPixels * 5)/100;
+        scoreBoardStartY = (Resources.getSystem().getDisplayMetrics().heightPixels * 5)/100;
+        scoreBoardEndY = (Resources.getSystem().getDisplayMetrics().heightPixels * 13)/100;
+        yOffset = (Resources.getSystem().getDisplayMetrics().heightPixels * 15)/100;
         xOffset = (Resources.getSystem().getDisplayMetrics().widthPixels *5)/100;
         if (height >= width){
             maxX = minimumItemCount;

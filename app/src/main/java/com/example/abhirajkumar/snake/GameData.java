@@ -6,7 +6,10 @@ package com.example.abhirajkumar.snake;
 
 public class GameData {
 
-    public void update() {
+    long score = 0;
+
+    public void updateScore() {
+        score += 10;
 
     }
 }
