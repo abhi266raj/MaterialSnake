@@ -12,4 +12,8 @@ public class GameData {
         score += 10;
 
     }
+
+    public void resetGameData(){
+        score  = 0;
+    }
 }

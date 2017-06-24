@@ -201,7 +201,7 @@ class GameView extends SurfaceView {
                 canvas.drawText("Score = "+ valueOf(data.score), 2*food.position.xOffset,  food.position.scoreBoardEndY - textHeight/4 , paint);
             }else{
                 canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, food.position.scoreBoardEndY - textHeight/4, paint);
-
+                data.resetGameData();
             }
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
