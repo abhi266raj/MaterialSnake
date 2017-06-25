@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 
 class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
+    public GameData gameData;
     private GameView gameView;
     public GestureListener (GameView gameView){
         this.gameView = gameView;
@@ -24,7 +25,7 @@ class GestureListener extends GestureDetector.SimpleOnGestureListener {
     public boolean onDoubleTap(MotionEvent e) {
 
         if (gameView.isGameOver){
-            gameView.makeSnake();
+            gameData.makeSnake(gameView);
             gameView.isGameOver = false;
 
         }

@@ -42,13 +42,13 @@ class GameView extends SurfaceView {
     Paint gradinetPaintGreen;
     int count = 0;
     //private boolean shouldShowFPS = false;
-    private Food food = new Food();
+    public Food food = new Food();
     //Paint gradinetPaintBlack;
 
     // This variable tracks the game frame rate
     //long fps;
    // frameDelay = 30;
-    private ArrayList<QunatisedPosition> snakePoints;
+    ArrayList<QunatisedPosition> snakePoints;
     // This is used to help calculate the fps
     //private long timeThisFrame;
 
@@ -70,7 +70,7 @@ class GameView extends SurfaceView {
         // SurfaceView class to set up our object.
         // How kind.
         super(context);
-        gestureDetector = new GestureDetector(context, new GestureListener(this));
+
         // Initialize ourHolder and paint objects
         ourHolder = getHolder();
         paint = new Paint();
@@ -81,7 +81,7 @@ class GameView extends SurfaceView {
 
         // Set our boolean to true - game on!
         //playing = true;
-        makeSnake();
+        //makeSnake();
         int x1 = food.position.xOffset, y1 = food.position.yOffset, x2 = food.position.maximumXPoint,  y2 = food.position.maximumYPoint;
         Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
         gradinetPaintGreen = new Paint();
@@ -93,16 +93,16 @@ class GameView extends SurfaceView {
     }
 
 
-    public void makeSnake(){
-
-        int snakeSizeInitial = 15;
-        snakePoints = new ArrayList<QunatisedPosition>(snakeSizeInitial);
-        for (int i= 0;i<snakeSizeInitial;i++) {
-            snakePoints.add(new QunatisedPosition(i,0));
-        }
-
-
-    }
+//    public void makeSnake(){
+//
+//        int snakeSizeInitial = 15;
+//        snakePoints = new ArrayList<QunatisedPosition>(snakeSizeInitial);
+//        for (int i= 0;i<snakeSizeInitial;i++) {
+//            snakePoints.add(new QunatisedPosition(i,0));
+//        }
+//
+//
+//    }
 
 
 
@@ -129,7 +129,7 @@ class GameView extends SurfaceView {
 
 
     QunatisedPosition newPoint = new QunatisedPosition(xPositionToChange + direction.xDirectionSign.value() ,yPositionToChange + direction.yDirectionSign.value());
-        willMoveToQuantisedPoint(newPoint,gameData);
+        gameData.willMoveToQuantisedPoint(newPoint,this);
     snakePoints.remove(0);
         snakePoints.add(newPoint);
 
@@ -167,6 +167,10 @@ class GameView extends SurfaceView {
 
 
             canvas.drawRoundRect(food.position.xOffset, QunatisedPosition.scoreBoardStartY, food.position.maximumXPoint, QunatisedPosition.scoreBoardEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+            //canvas.drawRect(0, QunatisedPosition.consoleStartY, QunatisedPosition.maximumXPoint + QunatisedPosition.xOffset, QunatisedPosition.consoleEndY,paint);
+
+            canvas.drawRoundRect(food.position.xOffset, QunatisedPosition.consoleStartY, food.position.maximumXPoint, QunatisedPosition.consoleEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+
             float textHeight = QunatisedPosition.scoreBoardEndY - QunatisedPosition.scoreBoardStartY;
 
             canvas.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
@@ -311,24 +315,9 @@ class GameView extends SurfaceView {
     }
 
 
-    private void willMoveToQuantisedPoint(QunatisedPosition point,GameData gameData){
-        if (point.x == food.position.x && point.y == food.position.y){
-            foodEaten();
-            gameData.updateScore();
-        }
 
 
-        for (QunatisedPosition position: snakePoints){
-            if (position.x == point.x && position.y == point.y){
-                //removeSnake();
-                isGameOver = true;
-                break;
-            }
-
-        }
-    }
-
-    private void foodEaten(){
+     void foodEaten(){
         snakePoints.add(0,snakePoints.get(0));
         food.updateFood();
 

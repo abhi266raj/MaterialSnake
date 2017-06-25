@@ -2,6 +2,7 @@ package com.example.abhirajkumar.snake;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.GestureDetector;
 
 /**
  * Created by abhiraj.kumar on 6/12/17.
@@ -21,6 +22,10 @@ public class GameEngine implements Runnable {
     public GameEngine(GameView gameView) {
         playing = true;
         this.gameView = gameView;
+        gameData.makeSnake(gameView);
+        GestureListener listner = new GestureListener(gameView);
+        listner.gameData = gameData;
+        gameView.gestureDetector = new GestureDetector(gameView.getContext(),listner);
     }
 
     @Override
