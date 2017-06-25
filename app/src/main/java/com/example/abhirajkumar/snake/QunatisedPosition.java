@@ -11,24 +11,54 @@ public class QunatisedPosition{
     int x;
     int y;
 
-    int scoreBoardStartY;
-    int scoreBoardEndY;
+    static int scoreBoardStartY;
+    static int scoreBoardEndY;
+    private static int maxX;
+    private static int maxY;
+    static int xOffset;
+    static int yOffset;
 
-    private int maxX;
-    private int maxY;
-    int xOffset;
-    int yOffset;
+
+    static int maximumXPoint;
+    static int maximumYPoint;
+    static int itemSize;
 
 
-    int maximumXPoint;
-    int maximumYPoint;
-    int itemSize;
+    static{
+        scoreBoardStartY = (Resources.getSystem().getDisplayMetrics().heightPixels * 5)/100;
+        scoreBoardEndY = (Resources.getSystem().getDisplayMetrics().heightPixels * 13)/100;
+
+        int minimumItemCount = 20;
+        int height = (80 * Resources.getSystem().getDisplayMetrics().heightPixels)/100;
+        int width = (90 * Resources.getSystem().getDisplayMetrics().widthPixels)/100;
+
+
+        yOffset = (Resources.getSystem().getDisplayMetrics().heightPixels * 15)/100;
+        xOffset = (Resources.getSystem().getDisplayMetrics().widthPixels *5)/100;
+        if (height >= width){
+            maxX = minimumItemCount;
+            itemSize = width/(minimumItemCount);
+            maxY = height/itemSize;
+
+        }else{
+            maxX = minimumItemCount;
+            itemSize = height/minimumItemCount;
+            maxX = width/itemSize;
+        }
+
+        maximumXPoint = maxX*itemSize+xOffset;
+
+        maximumYPoint = maxY*itemSize+yOffset;
+
+    }
+
+
     QunatisedPosition(int x,int y){
         this.x = x;
         this.y = y;
-        resetItemSize();
+       // resetItemSize();
         quantizeValue();
-        setMaximumXAndYPoint();
+        //setMaximumXAndYPoint();
     }
 
     private void setMaximumXAndYPoint(){
@@ -60,8 +90,7 @@ public class QunatisedPosition{
         int height = (80 * Resources.getSystem().getDisplayMetrics().heightPixels)/100;
         int width = (90 * Resources.getSystem().getDisplayMetrics().widthPixels)/100;
 
-        scoreBoardStartY = (Resources.getSystem().getDisplayMetrics().heightPixels * 5)/100;
-        scoreBoardEndY = (Resources.getSystem().getDisplayMetrics().heightPixels * 13)/100;
+
         yOffset = (Resources.getSystem().getDisplayMetrics().heightPixels * 15)/100;
         xOffset = (Resources.getSystem().getDisplayMetrics().widthPixels *5)/100;
         if (height >= width){

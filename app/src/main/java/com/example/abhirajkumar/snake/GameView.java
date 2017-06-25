@@ -166,8 +166,8 @@ class GameView extends SurfaceView {
 //            }
 
 
-            canvas.drawRoundRect(food.position.xOffset, food.position.scoreBoardStartY, food.position.maximumXPoint, food.position.scoreBoardEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
-            float textHeight = food.position.scoreBoardEndY - food.position.scoreBoardStartY;
+            canvas.drawRoundRect(food.position.xOffset, QunatisedPosition.scoreBoardStartY, food.position.maximumXPoint, QunatisedPosition.scoreBoardEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+            float textHeight = QunatisedPosition.scoreBoardEndY - QunatisedPosition.scoreBoardStartY;
 
             canvas.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
 
@@ -198,9 +198,9 @@ class GameView extends SurfaceView {
                     }
                 }
                 paint.setColor(Color.rgb(70, 70, 70));
-                canvas.drawText("Score = "+ valueOf(data.score), 2*food.position.xOffset,  food.position.scoreBoardEndY - textHeight/4 , paint);
+                canvas.drawText("Score = "+ valueOf(data.score), 2*food.position.xOffset,  QunatisedPosition.scoreBoardEndY - textHeight/4 , paint);
             }else{
-                canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, food.position.scoreBoardEndY - textHeight/4, paint);
+                canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
                 data.resetGameData();
             }
             paint.setColor(Color.rgb(230,60, 60));
