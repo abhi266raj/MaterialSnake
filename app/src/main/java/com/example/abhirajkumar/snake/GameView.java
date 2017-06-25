@@ -93,47 +93,7 @@ class GameView extends SurfaceView {
     }
 
 
-//    public void makeSnake(){
-//
-//        int snakeSizeInitial = 15;
-//        snakePoints = new ArrayList<QunatisedPosition>(snakeSizeInitial);
-//        for (int i= 0;i<snakeSizeInitial;i++) {
-//            snakePoints.add(new QunatisedPosition(i,0));
-//        }
-//
-//
-//    }
 
-
-
-
-
-    // Everything that needs to be updated goes in here
-    // In later projects we will have dozens (arrays) of objects.
-    // We will also do other things like collision detection.
-    public void update(GameData gameData) {
-
-        // If bob is moving (the player is touching the screen)
-        // then move him to the right based on his target speed and the current fps.
-       // if(isMoving){
-        if (isGameOver){
-            return;
-        }
-        QunatisedPosition firstPoint = snakePoints.get(0);
-        QunatisedPosition lastPoint = snakePoints.get(snakePoints.size()-1);
-        int xPositionToChange = lastPoint.x;
-        int yPositionToChange = lastPoint.y;
-
-
-
-
-
-    QunatisedPosition newPoint = new QunatisedPosition(xPositionToChange + direction.xDirectionSign.value() ,yPositionToChange + direction.yDirectionSign.value());
-        gameData.willMoveToQuantisedPoint(newPoint,this);
-    snakePoints.remove(0);
-        snakePoints.add(newPoint);
-
-    }
 
     // Draw the newly updated scene
     public void draw(GameData data) {
@@ -207,6 +167,8 @@ class GameView extends SurfaceView {
                 canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
                 data.resetGameData();
             }
+            canvas.drawText("Steps Since last Food = "+ valueOf(data.stepsTakenLastFood), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - textHeight/4 , paint);
+
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
             this.drawFood(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint);

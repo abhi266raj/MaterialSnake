@@ -36,7 +36,7 @@ public class GameEngine implements Runnable {
             long startFrameTime = System.currentTimeMillis();
 
             // Update the frame
-            gameView.update(gameData);
+            gameData.update(gameView);
             gameView.draw(gameData);
 
 
