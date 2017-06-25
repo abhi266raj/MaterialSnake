@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 public class GameData {
 
+    static long maximumFoodValue = 30;
+    static long minimumFoodValue = 10;
+    static long maximumStepsForBonus = 2* (QunatisedPosition.maximumXPoint + QunatisedPosition.maximumYPoint) ;
     long score = 0;
     long foodValue = 10;
     long stepsTakenLastFood = 0;
@@ -25,10 +28,10 @@ public class GameData {
 
     public void willMoveToQuantisedPoint(QunatisedPosition point,GameView gameView){
         stepsTakenLastFood++;
-        if (stepsTakenLastFood < 100){
-            foodValue = 30;
+        if (stepsTakenLastFood < maximumStepsForBonus){
+            foodValue = maximumFoodValue;
         }else{
-            foodValue = 10;
+            foodValue = minimumFoodValue;
         }
         if (point.x == gameView.food.position.x && point.y == gameView.food.position.y){
             gameView.foodEaten();
