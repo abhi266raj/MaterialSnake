@@ -40,7 +40,7 @@ class GameView extends SurfaceView {
     // when the game is running- or not.
     //volatile boolean playing;
     Paint gradinetPaintGreen;
-    int count = 0;
+
     //private boolean shouldShowFPS = false;
     public Food food = new Food();
     //Paint gradinetPaintBlack;
@@ -48,7 +48,7 @@ class GameView extends SurfaceView {
     // This variable tracks the game frame rate
     //long fps;
    // frameDelay = 30;
-    ArrayList<QunatisedPosition> snakePoints;
+
     // This is used to help calculate the fps
     //private long timeThisFrame;
 
@@ -82,7 +82,7 @@ class GameView extends SurfaceView {
         // Set our boolean to true - game on!
         //playing = true;
         //makeSnake();
-        int x1 = food.position.xOffset, y1 = food.position.yOffset, x2 = food.position.maximumXPoint,  y2 = food.position.maximumYPoint;
+        int x1 = QunatisedPosition.xOffset, y1 = QunatisedPosition.yOffset, x2 = QunatisedPosition.maximumXPoint,  y2 = QunatisedPosition.maximumYPoint;
         Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
         gradinetPaintGreen = new Paint();
         gradinetPaintGreen.setShader(shader);
@@ -126,7 +126,7 @@ class GameView extends SurfaceView {
 //            }
 
 
-            canvas.drawRoundRect(food.position.xOffset, QunatisedPosition.scoreBoardStartY, food.position.maximumXPoint, QunatisedPosition.scoreBoardEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+            canvas.drawRoundRect(QunatisedPosition.xOffset, QunatisedPosition.scoreBoardStartY, QunatisedPosition.maximumXPoint, QunatisedPosition.scoreBoardEndY,QunatisedPosition.itemSize/2,QunatisedPosition.itemSize/2, gradinetPaintGreen);
             //canvas.drawRect(0, QunatisedPosition.consoleStartY, QunatisedPosition.maximumXPoint + QunatisedPosition.xOffset, QunatisedPosition.consoleEndY,paint);
 
             canvas.drawRoundRect(food.position.xOffset, QunatisedPosition.consoleStartY, food.position.maximumXPoint, QunatisedPosition.consoleEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
@@ -141,11 +141,11 @@ class GameView extends SurfaceView {
 
             paint.setStrokeWidth(10);
 
-            int itemSize =  food.position.itemSize;
+            int itemSize =  QunatisedPosition.itemSize;
             if (!isGameOver) {
-                int fullSnakeSize = snakePoints.size();
-                for (int i = 0; i < snakePoints.size(); i++) {
-                    Point pixelPosition = snakePoints.get(i).convertToPoint();
+                int fullSnakeSize = data.snakePoints.size();
+                for (int i = 0; i < data.snakePoints.size(); i++) {
+                    Point pixelPosition = data.snakePoints.get(i).convertToPoint();
                 /* int itemSize = snakePoints.get(i).itemSize; */
                 int roundXValue = itemSize/2;
                     int roundYValue = roundXValue;
@@ -241,7 +241,7 @@ class GameView extends SurfaceView {
                 //direction.yDirectionSign = DirectionSign.ZERO;
                 //isMoving = false;
                 Point touchPointEnd = new Point(Math.round(motionEvent.getX()),Math.round(motionEvent.getY()));
-                int threshold = food.position.itemSize;
+                int threshold = QunatisedPosition.itemSize;
 
                 if (direction.xDirectionSign != DirectionSign.ZERO){
                     if (touchPointStart.y -touchPointEnd.y > threshold){
@@ -279,12 +279,7 @@ class GameView extends SurfaceView {
 
 
 
-     void foodEaten(){
-        snakePoints.add(0,snakePoints.get(0));
-        food.updateFood();
 
-
-    }
 
 
     /**

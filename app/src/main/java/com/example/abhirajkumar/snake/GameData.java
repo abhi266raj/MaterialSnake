@@ -15,6 +15,7 @@ public class GameData {
     long foodValue = 10;
     long stepsTakenLastFood = 0;
     boolean isGameOver = false;
+    ArrayList<QunatisedPosition> snakePoints;
 
     public void updateScore() {
         score += foodValue;
@@ -34,7 +35,7 @@ public class GameData {
             foodValue = minimumFoodValue;
         }
         if (point.x == gameView.food.position.x && point.y == gameView.food.position.y){
-            gameView.foodEaten();
+            this.foodEaten(gameView);
             stepsTakenLastFood = 0;
 
 
@@ -43,7 +44,7 @@ public class GameData {
         }
 
 
-        for (QunatisedPosition position: gameView.snakePoints){
+        for (QunatisedPosition position: snakePoints){
             if (position.x == point.x && position.y == point.y){
                 //removeSnake();
                 gameView.isGameOver = true;
@@ -56,13 +57,20 @@ public class GameData {
 
 
 
+
+    private void foodEaten(GameView gameView){
+        snakePoints.add(0,snakePoints.get(0));
+        gameView.food.updateFood();
+
+
+    }
     //To do refactor
     public void makeSnake(GameView gameView){
 
         int snakeSizeInitial = 15;
-        gameView.snakePoints = new ArrayList<QunatisedPosition>(snakeSizeInitial);
+        snakePoints = new ArrayList<QunatisedPosition>(snakeSizeInitial);
         for (int i= 0;i<snakeSizeInitial;i++) {
-            gameView.snakePoints.add(new QunatisedPosition(i,0));
+            snakePoints.add(new QunatisedPosition(i,0));
         }
 
 
@@ -76,8 +84,8 @@ public class GameData {
         if (gameView.isGameOver){
             return;
         }
-        QunatisedPosition firstPoint = gameView.snakePoints.get(0);
-        QunatisedPosition lastPoint = gameView.snakePoints.get(gameView.snakePoints.size()-1);
+        QunatisedPosition firstPoint = snakePoints.get(0);
+        QunatisedPosition lastPoint = snakePoints.get(snakePoints.size()-1);
         int xPositionToChange = lastPoint.x;
         int yPositionToChange = lastPoint.y;
 
@@ -87,8 +95,8 @@ public class GameData {
 
         QunatisedPosition newPoint = new QunatisedPosition(xPositionToChange + gameView.direction.xDirectionSign.value() ,yPositionToChange + gameView.direction.yDirectionSign.value());
         this.willMoveToQuantisedPoint(newPoint,gameView);
-        gameView.snakePoints.remove(0);
-        gameView.snakePoints.add(newPoint);
+        snakePoints.remove(0);
+        snakePoints.add(newPoint);
 
     }
 
