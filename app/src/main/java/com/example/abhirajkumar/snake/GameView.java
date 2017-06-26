@@ -29,6 +29,7 @@ class GameView extends SurfaceView {
     SurfaceHolder ourHolder;
     // A Canvas and a Paint object
     Canvas canvas;
+    Canvas backgroundCanvas;
     // This is our thread
 
 
@@ -126,14 +127,14 @@ class GameView extends SurfaceView {
 //            }
 
 
-            canvas.drawRoundRect(QunatisedPosition.xOffset, QunatisedPosition.scoreBoardStartY, QunatisedPosition.maximumXPoint, QunatisedPosition.scoreBoardEndY,QunatisedPosition.itemSize/2,QunatisedPosition.itemSize/2, gradinetPaintGreen);
+            this.drawRoundRect(QunatisedPosition.xOffset, QunatisedPosition.scoreBoardStartY, QunatisedPosition.maximumXPoint, QunatisedPosition.scoreBoardEndY,QunatisedPosition.itemSize/2,QunatisedPosition.itemSize/2, gradinetPaintGreen,canvas);
             //canvas.drawRect(0, QunatisedPosition.consoleStartY, QunatisedPosition.maximumXPoint + QunatisedPosition.xOffset, QunatisedPosition.consoleEndY,paint);
 
-            canvas.drawRoundRect(food.position.xOffset, QunatisedPosition.consoleStartY, food.position.maximumXPoint, QunatisedPosition.consoleEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+            this.drawRoundRect(food.position.xOffset, QunatisedPosition.consoleStartY, food.position.maximumXPoint, QunatisedPosition.consoleEndY,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen,canvas);
 
             float textHeight = QunatisedPosition.scoreBoardEndY - QunatisedPosition.scoreBoardStartY;
 
-            canvas.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen);
+            this.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen,canvas);
 
 
             paint.setColor(Color.rgb(70, 70, 70));
@@ -158,7 +159,7 @@ class GameView extends SurfaceView {
                         //paint.setColor(Color.rgb(0, 0, 0));
 
                     }else {
-                        canvas.drawRoundRect(pixelPosition.x + sizeReduction, pixelPosition.y + sizeReduction, pixelPosition.x + itemSize - sizeReduction, pixelPosition.y + itemSize - sizeReduction, roundXValue, roundYValue, paint);
+                        this.drawRoundRect(pixelPosition.x + sizeReduction, pixelPosition.y + sizeReduction, pixelPosition.x + itemSize - sizeReduction, pixelPosition.y + itemSize - sizeReduction, roundXValue, roundYValue, paint,canvas);
                     }
                 }
                 paint.setColor(Color.rgb(70, 70, 70));
@@ -182,8 +183,18 @@ class GameView extends SurfaceView {
 
 
 
+    public void drawRoundRect(float left,float right,float top,float bottom, float rx,float ry,Paint paint, Canvas canvasToDraw){
+        if(android.os.Build.VERSION.SDK_INT>=21) {
+            canvasToDraw.drawRoundRect(left, right, top, bottom, rx, ry, paint);
+        }else{
+            canvasToDraw.drawRect(left, right, top, bottom, paint);
+        }
+    }
+
+
+
     public void drawHead(int x, int y, int x2, int y2, Paint paint){
-        canvas.drawRoundRect(x,y,x2,y2, (x2-x)/3,(x2-x)/3,paint);
+        this.drawRoundRect(x,y,x2,y2, (x2-x)/3,(x2-x)/3,paint,canvas);
         paint.setColor(Color.rgb(136, 196, 96));
         int midX =  (x+x2)/2;
         int midY =  (y + y2)/2;
@@ -199,11 +210,15 @@ class GameView extends SurfaceView {
         canvas.drawRect(x,y,x2,y2,paint);
         paint.setColor(Color.rgb(0,0,0));
         //canvas.drawRect(midX ,y,x2,midY,paint);
-        canvas.drawArc(midX,y,x2,midY,225,180,true,paint);
-        canvas.drawArc(x,midY,midX,y2,45,180,true,paint);
-        canvas.drawArc(x,y,midX,midY,135,180,true,paint);
-        canvas.drawArc(midX,midY,x2,y2,315,180,true,paint);
-        canvas.drawCircle(midX,midY,(x2-x)/6,paint);
+        if(android.os.Build.VERSION.SDK_INT>=21) {
+            canvas.drawArc(midX, y, x2, midY, 225, 180, true, paint);
+            canvas.drawArc(x, midY, midX, y2, 45, 180, true, paint);
+            canvas.drawArc(x, y, midX, midY, 135, 180, true, paint);
+            canvas.drawArc(midX, midY, x2, y2, 315, 180, true, paint);
+            canvas.drawCircle(midX, midY, (x2 - x) / 6, paint);
+        }else{
+            canvas.drawCircle(midX,midY,(x2-x)/2,paint);
+        }
     }
 
 

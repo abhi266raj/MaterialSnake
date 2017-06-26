@@ -5,10 +5,10 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.nogame.abhirajkumar.snake"
-        minSdkVersion 21
+        minSdkVersion 18
         targetSdkVersion 24
-        versionCode 7
-        versionName "1.7"
+        versionCode 8
+        versionName "1.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
