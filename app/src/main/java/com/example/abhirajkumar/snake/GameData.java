@@ -10,7 +10,7 @@ public class GameData {
 
     static long maximumFoodValue = 30;
     static long minimumFoodValue = 10;
-    static long maximumStepsForBonus = 2* (QunatisedPosition.maximumXPoint + QunatisedPosition.maximumYPoint) ;
+    static long maximumStepsForBonus = (QunatisedPosition.maximumXPoint + QunatisedPosition.maximumYPoint)/QunatisedPosition.itemSize ;
     long score = 0;
     long foodValue = 10;
     long stepsTakenLastFood = 0;

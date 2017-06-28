@@ -3,7 +3,6 @@ package com.example.abhirajkumar.snake;
 
 
 import android.content.Context;
-import java.util.ArrayList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -168,7 +167,7 @@ class GameView extends SurfaceView {
                 canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
                 data.resetGameData();
             }
-            canvas.drawText("Steps Since last Food = "+ valueOf(data.stepsTakenLastFood), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - textHeight/4 , paint);
+            canvas.drawText("Steps Since last Food = "+ valueOf(data.stepsTakenLastFood) + "\nFood Bonus = "+valueOf(data.foodValue), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - textHeight/4 , paint);
 
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
