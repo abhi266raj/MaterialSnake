@@ -162,12 +162,15 @@ class GameView extends SurfaceView {
                     }
                 }
                 paint.setColor(Color.rgb(70, 70, 70));
-                canvas.drawText("Score = "+ valueOf(data.score), 2*food.position.xOffset,  QunatisedPosition.scoreBoardEndY - textHeight/4 , paint);
+                canvas.drawText("Score = "+ valueOf(data.score), 2*food.position.xOffset,  QunatisedPosition.scoreBoardEndY - textHeight/8 , paint);
+                canvas.drawText("Hi-Score = " + valueOf(data.maxHighScore), 2*food.position.xOffset,  QunatisedPosition.scoreBoardEndY - (textHeight/8)*5 , paint);
+
             }else{
                 canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
                 data.resetGameData();
             }
-            canvas.drawText("Steps Since last Food = "+ valueOf(data.stepsTakenLastFood) + "\nFood Bonus = "+valueOf(data.foodValue), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - textHeight/4 , paint);
+            canvas.drawText("Steps= "+ valueOf(data.stepsTakenLastFood) + "  Score Bonus = "+valueOf(data.foodValue), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - textHeight/8 , paint);
+            canvas.drawText(data.currentMission.objective(), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - (textHeight/8)*5 , paint);
 
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
