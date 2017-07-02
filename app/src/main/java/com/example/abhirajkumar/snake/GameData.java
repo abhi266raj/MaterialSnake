@@ -17,6 +17,7 @@ public class GameData {
     static long maximumFoodValue = 30;
     static long minimumFoodValue = 10;
     boolean isFoodInBonusMode = true;
+    public float normalisedTimeLeftForBonus = 1; //number between 0 to 1
     static long maximumStepsForBonus = (QunatisedPosition.maximumXPoint + QunatisedPosition.maximumYPoint)/QunatisedPosition.itemSize ;
     long score = 0;
     long foodValue = 10;
@@ -68,9 +69,11 @@ public class GameData {
         if (stepsTakenLastFood < maximumStepsForBonus){
             foodValue = maximumFoodValue * currentMission.missionNumber;
             isFoodInBonusMode = true;
+            normalisedTimeLeftForBonus = 1 - (float)stepsTakenLastFood/(float)maximumStepsForBonus;
         }else{
             foodValue = minimumFoodValue * currentMission.missionNumber;
             isFoodInBonusMode = false;
+            normalisedTimeLeftForBonus = 0;
         }
         if (point.x == gameView.food.position.x && point.y == gameView.food.position.y){
             this.foodEaten(gameView);

@@ -174,7 +174,7 @@ class GameView extends SurfaceView {
 
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
-            this.drawFood(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint);
+            this.drawFood(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint,data);
 
 
             // Draw everything to the screen
@@ -204,23 +204,32 @@ class GameView extends SurfaceView {
 
     }
 
-    public void drawFood(int x, int y, int x2, int y2, Paint paint){
+    public void drawFood(int x, int y, int x2, int y2, Paint paint,GameData data){
 
         int midX =  (x+x2)/2;
         int midY =  (y + y2)/2;
-        paint.setColor(Color.rgb(136, 196, 96));
-        canvas.drawRect(x,y,x2,y2,paint);
-        paint.setColor(Color.rgb(0,0,0));
-        //canvas.drawRect(midX ,y,x2,midY,paint);
-        if(android.os.Build.VERSION.SDK_INT>=21) {
-            canvas.drawArc(midX, y, x2, midY, 225, 180, true, paint);
-            canvas.drawArc(x, midY, midX, y2, 45, 180, true, paint);
-            canvas.drawArc(x, y, midX, midY, 135, 180, true, paint);
-            canvas.drawArc(midX, midY, x2, y2, 315, 180, true, paint);
-            canvas.drawCircle(midX, midY, (x2 - x) / 6, paint);
-        }else{
-            canvas.drawCircle(midX,midY,(x2-x)/2,paint);
+        paint.setColor(Color.rgb(70,70,70));
+        canvas.drawCircle(midX,midY,(x2-x)/2,paint);
+        paint.setColor(Color.rgb(183,28,28));
+
+        if (data.isFoodInBonusMode == true) {
+            if(android.os.Build.VERSION.SDK_INT>=21) {
+                float angleSweep = 360 * data.normalisedTimeLeftForBonus;
+             canvas.drawArc(x,y,x2,y2,0,angleSweep,true,paint);
+            }else{
+                canvas.drawCircle(midX,midY,(x2-x)/2,paint);
+            }
         }
+        //canvas.drawRect(midX ,y,x2,midY,paint);
+//        if(android.os.Build.VERSION.SDK_INT>=21) {
+//            canvas.drawArc(midX, y, x2, midY, 225, 180, true, paint);
+//            canvas.drawArc(x, midY, midX, y2, 45, 180, true, paint);
+//            canvas.drawArc(x, y, midX, midY, 135, 180, true, paint);
+//            canvas.drawArc(midX, midY, x2, y2, 315, 180, true, paint);
+//            canvas.drawCircle(midX, midY, (x2 - x) / 6, paint);
+//        }else{
+//            canvas.drawCircle(midX,midY,(x2-x)/2,paint);
+//        }
     }
 
 
