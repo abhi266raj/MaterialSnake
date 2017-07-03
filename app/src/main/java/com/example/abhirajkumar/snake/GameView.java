@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.view.GestureDetector;
 import android.graphics.Shader;
 import android.graphics.LinearGradient;
+import android.graphics.RadialGradient;
 import android.graphics.Shader.TileMode;
 
 import static java.lang.String.*;
@@ -40,6 +41,7 @@ class GameView extends SurfaceView {
     // when the game is running- or not.
     //volatile boolean playing;
     Paint gradinetPaintGreen;
+    Paint gradinetPaintBrown;
 
     //private boolean shouldShowFPS = false;
     public Food food = new Food();
@@ -83,10 +85,18 @@ class GameView extends SurfaceView {
         //playing = true;
         //makeSnake();
         int x1 = QunatisedPosition.xOffset, y1 = QunatisedPosition.yOffset, x2 = QunatisedPosition.maximumXPoint,  y2 = QunatisedPosition.maximumYPoint;
-        Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
+        //Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
+        Shader shader;
+       // paint.setColor(Color.rgb(121, 85, 72));
+
+        shader = new RadialGradient(x2/2,y2/2,QunatisedPosition.itemSize*10,Color.rgb(120, 200, 100),Color.rgb(40, 180, 70), TileMode.CLAMP);
         gradinetPaintGreen = new Paint();
         gradinetPaintGreen.setShader(shader);
-
+        int gradientEndColor = Color.rgb(210,105,30);
+        int gradinetStartColor = Color.rgb(160,82,45);
+        Shader brownShader = new LinearGradient(0,0,0,QunatisedPosition.itemSize*5,gradinetStartColor,gradientEndColor,TileMode.MIRROR);
+        gradinetPaintBrown = new Paint();
+        gradinetPaintBrown.setShader(brownShader);
         //Bitmap.createBitmap(square,0,0,20,20);
         //mDrawable.getPaint().setColor(0xff74AC23);
 
@@ -106,6 +116,7 @@ class GameView extends SurfaceView {
 
 
             canvas.drawColor(Color.argb(10,70, 70, 70));
+            this.drawBorder(canvas,gradinetPaintBrown);
 
             // Choose the brush color for drawing
             paint.setColor(Color.rgb(136, 196, 96));
@@ -162,15 +173,15 @@ class GameView extends SurfaceView {
                     }
                 }
                 paint.setColor(Color.rgb(70, 70, 70));
-                canvas.drawText("Score = "+ valueOf(data.score), 2*food.position.xOffset,  QunatisedPosition.scoreBoardEndY - textHeight/8 , paint);
-                canvas.drawText("Hi-Score = " + valueOf(data.maxHighScore), 2*food.position.xOffset,  QunatisedPosition.scoreBoardEndY - (textHeight/8)*5 , paint);
+                canvas.drawText("Score = "+ valueOf(data.score), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.scoreBoardEndY - textHeight/8 , paint);
+                canvas.drawText("Hi-Score = " + valueOf(data.maxHighScore), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.scoreBoardEndY - (textHeight/8)*5 , paint);
 
             }else{
-                canvas.drawText("Game Over: Double Tap to restart"  , 2*food.position.xOffset, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
+                canvas.drawText("Game Over: Double Tap to restart"  , QunatisedPosition.xOffset + QunatisedPosition.itemSize, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
                 data.resetGameData();
             }
-            canvas.drawText("Steps= "+ valueOf(data.stepsTakenLastFood) + "  Score Bonus = "+valueOf(data.foodValue), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - textHeight/8 , paint);
-            canvas.drawText(data.currentMission.objective(), 2*QunatisedPosition.xOffset,  QunatisedPosition.consoleEndY - (textHeight/8)*5 , paint);
+            canvas.drawText("Steps= "+ valueOf(data.stepsTakenLastFood) + "  Score Bonus = "+valueOf(data.foodValue), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.consoleEndY - textHeight/8 , paint);
+            canvas.drawText(data.currentMission.objective(), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.consoleEndY - (textHeight/8)*5 , paint);
 
             paint.setColor(Color.rgb(230,60, 60));
             Point foodPoint = food.position.convertToPoint();
@@ -185,11 +196,43 @@ class GameView extends SurfaceView {
 
 
 
-    public void drawRoundRect(float left,float right,float top,float bottom, float rx,float ry,Paint paint, Canvas canvasToDraw){
+    public void drawBorder(Canvas canvas, Paint paint){
+        //paint.setColor(Color.rgb(121, 85, 72));
+        //canvas.drawRect(0,100,);
+        for (int i = 0;i<10;i++) {
+            int startY = QunatisedPosition.screenHeight*i/10;
+            int height = QunatisedPosition.screenHeight/10 - QunatisedPosition.itemSize/5;
+            this.drawTiles(0, startY, QunatisedPosition.xOffset, startY+height, paint,canvas);
+            this.drawTiles(QunatisedPosition.maximumXPoint, startY, QunatisedPosition.screenWidth, startY+height, paint,canvas);
+
+        }
+
+        for (int i = 0;i<7;i++){
+            int startX = QunatisedPosition.screenWidth*i/7;
+            int width =QunatisedPosition.screenWidth/7 - QunatisedPosition.itemSize/5;
+            this.drawTiles(startX, 0, startX+width, QunatisedPosition.yOffset, paint,canvas);
+            this.drawTiles(startX, QunatisedPosition.maximumYPoint, startX+width, QunatisedPosition.screenHeight, paint,canvas);
+
+            //this.drawTiles(QunatisedPosition.maximumXPoint, startY, QunatisedPosition.screenWidth, startY+height, paint,canvas);
+
+
+
+        }
+
+        //this.drawRoundRect(0,0,QunatisedPosition.xOffset,QunatisedPosition.screenHeight,QunatisedPosition.itemSize,QunatisedPosition.itemSize,paint,canvas);
+
+    }
+
+
+    public void drawTiles(float left,float top,float right,float bottom, Paint paint, Canvas canvasToDraw){
+        canvas.drawRect(left, top, right, bottom, paint);
+    }
+
+    public void drawRoundRect(float left,float top,float right,float bottom, float rx,float ry,Paint paint, Canvas canvasToDraw){
         if(android.os.Build.VERSION.SDK_INT>=21) {
-            canvasToDraw.drawRoundRect(left, right, top, bottom, rx, ry, paint);
+            canvasToDraw.drawRoundRect(left, top, right, bottom, rx, ry, paint);
         }else{
-            canvasToDraw.drawRect(left, right, top, bottom, paint);
+            canvasToDraw.drawRect(left, top, right, bottom, paint);
         }
     }
 
@@ -220,16 +263,7 @@ class GameView extends SurfaceView {
                 canvas.drawCircle(midX,midY,(x2-x)/2,paint);
             }
         }
-        //canvas.drawRect(midX ,y,x2,midY,paint);
-//        if(android.os.Build.VERSION.SDK_INT>=21) {
-//            canvas.drawArc(midX, y, x2, midY, 225, 180, true, paint);
-//            canvas.drawArc(x, midY, midX, y2, 45, 180, true, paint);
-//            canvas.drawArc(x, y, midX, midY, 135, 180, true, paint);
-//            canvas.drawArc(midX, midY, x2, y2, 315, 180, true, paint);
-//            canvas.drawCircle(midX, midY, (x2 - x) / 6, paint);
-//        }else{
-//            canvas.drawCircle(midX,midY,(x2-x)/2,paint);
-//        }
+
     }
 
 
