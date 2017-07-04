@@ -15,6 +15,7 @@ import android.graphics.Shader;
 import android.graphics.LinearGradient;
 import android.graphics.RadialGradient;
 import android.graphics.Shader.TileMode;
+import	android.graphics.EmbossMaskFilter;
 
 import static java.lang.String.*;
 
@@ -91,12 +92,18 @@ class GameView extends SurfaceView {
 
         shader = new RadialGradient(x2/2,y2/2,QunatisedPosition.itemSize*10,Color.rgb(120, 200, 100),Color.rgb(40, 180, 70), TileMode.CLAMP);
         gradinetPaintGreen = new Paint();
+        gradinetPaintGreen.setColor(Color.rgb(40,180,70));
         gradinetPaintGreen.setShader(shader);
         int gradientEndColor = Color.rgb(210,105,30);
         int gradinetStartColor = Color.rgb(160,82,45);
         Shader brownShader = new LinearGradient(0,0,0,QunatisedPosition.itemSize*5,gradinetStartColor,gradientEndColor,TileMode.MIRROR);
         gradinetPaintBrown = new Paint();
         gradinetPaintBrown.setShader(brownShader);
+
+        //EmbossMaskFilter filter = new EmbossMaskFilter(new float[]{1, 1, 1}, 0.5f, 0.6f, 5f);
+
+        //Paint paintEmboss = new Paint();
+        //gradinetPaintGreen.setMaskFilter(filter);
         //Bitmap.createBitmap(square,0,0,20,20);
         //mDrawable.getPaint().setColor(0xff74AC23);
 
@@ -114,7 +121,7 @@ class GameView extends SurfaceView {
             canvas = ourHolder.lockCanvas();
 
 
-
+            //canvas.drawPaint(gradinetPaintBrown);
             canvas.drawColor(Color.argb(10,70, 70, 70));
             this.drawBorder(canvas,gradinetPaintBrown);
 
