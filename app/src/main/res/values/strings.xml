@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Snake</string>
     <string name="title_activity_play_start">PlayStartActivity</string>
+    <string name="title_activity_play">PlayActivity</string>
 </resources>

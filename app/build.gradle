@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.nogame.abhirajkumar.snake"
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 24
         versionCode 193
         versionName "1.93"
