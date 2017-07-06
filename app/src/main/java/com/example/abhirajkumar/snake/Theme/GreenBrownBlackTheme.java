@@ -24,6 +24,10 @@ public class GreenBrownBlackTheme implements ThemeInterFace {
 
     }
 
+    public int quadnaryColor(){
+        return Color.rgb(183,28,28);
+    }
+
     public int primaryColorGradientVariant(){
         return Color.rgb(120, 200, 100);
 
@@ -37,5 +41,9 @@ public class GreenBrownBlackTheme implements ThemeInterFace {
     public int tertiaryColorGradientVariant(){
         return Color.rgb(210,105,30);
 
+    }
+
+    public int quadnaryColorGradientVariant(){
+        return Color.rgb ( 70,70,70);
     }
 }

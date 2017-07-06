@@ -1,4 +1,6 @@
-package com.example.abhirajkumar.snake;
+package com.example.abhirajkumar.snake.Mission;
+
+import com.example.abhirajkumar.snake.GameData;
 
 /**
  * Created by abhiraj.kumar on 6/29/17.
@@ -7,10 +9,10 @@ package com.example.abhirajkumar.snake;
 public class MissionFactory {
 
 
-    static int missionNumber = 0;
+    public static int missionNumber = 0;
     public  static GameMission getNewMission(GameData data){
         missionNumber++;
-        GameMission mission =  new FoodEatMissionInTurn();
+        GameMission mission =  new FoodEatMissionInTurn ();
         mission.data = data;
         mission.missionNumber = missionNumber;
         return mission;

@@ -11,8 +11,10 @@ public interface ThemeInterFace {
     public int primaryColor();
     public int secondaryColor();
     public int tertiaryColor();
+    public int quadnaryColor();
     public int primaryColorGradientVariant();
     public int secondaryColorGradientVariant();
     public int tertiaryColorGradientVariant();
+    public int quadnaryColorGradientVariant();
 
 }

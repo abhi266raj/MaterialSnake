@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.view.MotionEvent;
@@ -124,16 +123,11 @@ class GameView extends SurfaceView {
             canvas = ourHolder.lockCanvas();
 
 
-            //canvas.drawPaint(gradinetPaintBrown);
-            canvas.drawColor(Color.argb(10,70, 70, 70));
+
+            canvas.drawColor(Theme.currentTheme.tertiaryColor ());
             this.drawBorder(canvas,gradinetPaintBrown);
 
-            // Choose the brush color for drawing
-            paint.setColor(Color.rgb(136, 196, 96));
-            //paint.setShadowLayer(12, 0, 0, Color.YELLOW);
 
-            // Important for certain APIs
-            //setLayerType(LAYER_TYPE_SOFTWARE, paint);
 
 
 
@@ -175,7 +169,7 @@ class GameView extends SurfaceView {
                         roundYValue = itemSize/3;
                         sizeReduction = 0;
                         this.drawHead(pixelPosition.x,  pixelPosition.y , pixelPosition.x + itemSize, pixelPosition.y + itemSize,paint);
-                        //paint.setColor(Color.rgb(0, 0, 0));
+
 
                     }else {
                         this.drawRoundRect(pixelPosition.x + sizeReduction, pixelPosition.y + sizeReduction, pixelPosition.x + itemSize - sizeReduction, pixelPosition.y + itemSize - sizeReduction, roundXValue, roundYValue, paint,canvas);
@@ -189,7 +183,7 @@ class GameView extends SurfaceView {
             canvas.drawText("Steps= "+ valueOf(data.stepsTakenLastFood) + "  Score Bonus = "+valueOf(data.foodValue), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.consoleEndY - textHeight/8 , paint);
             canvas.drawText(data.currentMission.objective(), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.consoleEndY - (textHeight/8)*5 , paint);
 
-            paint.setColor(Color.rgb(230,60, 60));
+
             Point foodPoint = food.position.convertToPoint();
             this.drawFood(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint,data);
 
@@ -254,7 +248,7 @@ class GameView extends SurfaceView {
 
     public void drawHead(int x, int y, int x2, int y2, Paint paint){
         this.drawRoundRect(x,y,x2,y2, (x2-x)/3,(x2-x)/3,paint,canvas);
-        paint.setColor(Color.rgb(136, 196, 96));
+        paint.setColor(Theme.currentTheme.primaryColorGradientVariant ());
         int midX =  (x+x2)/2;
         int midY =  (y + y2)/2;
         canvas.drawCircle(midX,midY,(x2-x)/8,paint);
@@ -267,7 +261,7 @@ class GameView extends SurfaceView {
         int midY =  (y + y2)/2;
         paint.setColor(Theme.currentTheme.tertiaryColor ());
         canvas.drawCircle(midX,midY,(x2-x)/2,paint);
-        paint.setColor(Color.rgb(183,28,28));
+        paint.setColor(Theme.currentTheme.quadnaryColor ());
 
         if (data.isFoodInBonusMode == true) {
             if(android.os.Build.VERSION.SDK_INT>=21) {

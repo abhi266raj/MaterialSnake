@@ -2,14 +2,12 @@ package com.example.abhirajkumar.snake;
 
 import java.util.ArrayList;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.Context;
 import 	java.util.concurrent.TimeUnit;
 
-import android.app.Activity;
-import android.graphics.Point;
-import android.preference.PreferenceManager;
+import com.example.abhirajkumar.snake.Mission.GameMission;
+import com.example.abhirajkumar.snake.Mission.MissionFactory;
 
 
 /**
@@ -26,7 +24,7 @@ public class GameData {
     static long maximumStepsForBonus = (QunatisedPosition.maximumXPoint + QunatisedPosition.maximumYPoint)/QunatisedPosition.itemSize ;
     long score = 0;
     long foodValue = 10;
-    long stepsTakenLastFood = 0;
+    public long stepsTakenLastFood = 0;
 
     ArrayList<QunatisedPosition> snakePoints;
     GameMission currentMission = MissionFactory.getNewMission(this);

@@ -1,4 +1,6 @@
-package com.example.abhirajkumar.snake;
+package com.example.abhirajkumar.snake.Mission;
+import com.example.abhirajkumar.snake.MissionStaus;
+
 import static java.lang.String.*;
 
 /**
