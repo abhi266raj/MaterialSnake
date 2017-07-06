@@ -23,9 +23,9 @@ public class GameEngine implements Runnable {
         playing = true;
         this.gameView = gameView;
         gameData.makeSnake(gameView);
-        GestureListener listner = new GestureListener(gameView);
-        listner.gameData = gameData;
-        gameView.gestureDetector = new GestureDetector(gameView.getContext(),listner);
+        //GestureListener listner = new GestureListener(gameView);
+        //listner.gameData = gameData;
+        //gameView.gestureDetector = new GestureDetector(gameView.getContext(),listner);
     }
 
     @Override

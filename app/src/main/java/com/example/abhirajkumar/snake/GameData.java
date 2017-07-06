@@ -1,9 +1,14 @@
 package com.example.abhirajkumar.snake;
 
 import java.util.ArrayList;
+
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.Context;
+import 	java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
+import android.graphics.Point;
 import android.preference.PreferenceManager;
 
 
@@ -22,7 +27,7 @@ public class GameData {
     long score = 0;
     long foodValue = 10;
     long stepsTakenLastFood = 0;
-    boolean isGameOver = false;
+
     ArrayList<QunatisedPosition> snakePoints;
     GameMission currentMission = MissionFactory.getNewMission(this);
 
@@ -87,9 +92,7 @@ public class GameData {
 
         for (QunatisedPosition position: snakePoints){
             if (position.x == point.x && position.y == point.y){
-                //removeSnake();
-                gameView.isGameOver = true;
-                this.isGameOver = true;
+                GameStatus.isGameOver = true;
                 break;
             }
 
@@ -113,11 +116,13 @@ public class GameData {
     //To do refactor
     public void makeSnake(GameView gameView){
 
-        int snakeSizeInitial = 15;
+        int snakeSizeInitial = 20;
         snakePoints = new ArrayList<QunatisedPosition>(snakeSizeInitial);
         for (int i= 0;i<snakeSizeInitial;i++) {
             snakePoints.add(new QunatisedPosition(i,0));
         }
+        gameView.direction = new MotionDirection(DirectionSign.ZERO,DirectionSign.POSITIVE);
+
 
 
     }
@@ -127,7 +132,7 @@ public class GameData {
         // If bob is moving (the player is touching the screen)
         // then move him to the right based on his target speed and the current fps.
         // if(isMoving){
-        if (gameView.isGameOver){
+        if (GameStatus.isGameOver){
             return;
         }
         QunatisedPosition firstPoint = snakePoints.get(0);
@@ -141,8 +146,20 @@ public class GameData {
 
         QunatisedPosition newPoint = new QunatisedPosition(xPositionToChange + gameView.direction.xDirectionSign.value() ,yPositionToChange + gameView.direction.yDirectionSign.value());
         this.willMoveToQuantisedPoint(newPoint,gameView);
-        snakePoints.remove(0);
-        snakePoints.add(newPoint);
+       if (GameStatus.isGameOver){
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            }catch (InterruptedException e){
+
+            }
+           //snakePoints.remove(0);
+            makeSnake(gameView);
+            resetGameData();
+
+        }else {
+            snakePoints.remove(0);
+            snakePoints.add(newPoint);
+        }
 
     }
 

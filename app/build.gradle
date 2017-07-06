@@ -7,8 +7,8 @@ android {
         applicationId "com.nogame.abhirajkumar.snake"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 193
-        versionName "1.93"
+        versionCode 197
+        versionName "1.97"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

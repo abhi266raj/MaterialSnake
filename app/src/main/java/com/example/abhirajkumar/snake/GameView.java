@@ -1,8 +1,9 @@
 package com.example.abhirajkumar.snake;
 
 
-
+import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,12 +11,14 @@ import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.GestureDetector;
 import android.graphics.Shader;
 import android.graphics.LinearGradient;
 import android.graphics.RadialGradient;
 import android.graphics.Shader.TileMode;
-import	android.graphics.EmbossMaskFilter;
+import android.content.Intent;
+
+
+import com.example.abhirajkumar.snake.Theme.Theme;
 
 import static java.lang.String.*;
 
@@ -23,8 +26,8 @@ import static java.lang.String.*;
 class GameView extends SurfaceView {
 
 
-    GestureDetector gestureDetector;
-    boolean isGameOver = false;
+
+
     MotionDirection direction = new MotionDirection(DirectionSign.ZERO,DirectionSign.POSITIVE);
     Point touchPointStart;
     SurfaceHolder ourHolder;
@@ -90,12 +93,12 @@ class GameView extends SurfaceView {
         Shader shader;
        // paint.setColor(Color.rgb(121, 85, 72));
 
-        shader = new RadialGradient(x2/2,y2/2,QunatisedPosition.itemSize*10,Color.rgb(120, 200, 100),Color.rgb(40, 180, 70), TileMode.CLAMP);
+        shader = new RadialGradient(x2/2,y2/2,QunatisedPosition.itemSize*10,Theme.currentTheme.primaryColorGradientVariant (),Theme.currentTheme.primaryColor (), TileMode.CLAMP);
         gradinetPaintGreen = new Paint();
-        gradinetPaintGreen.setColor(Color.rgb(40,180,70));
+        gradinetPaintGreen.setColor(Theme.currentTheme.primaryColor ());
         gradinetPaintGreen.setShader(shader);
-        int gradientEndColor = Color.rgb(210,105,30);
-        int gradinetStartColor = Color.rgb(160,82,45);
+        int gradientEndColor = Theme.currentTheme.secondaryColorGradientVariant();
+        int gradinetStartColor = Theme.currentTheme.secondaryColor ();
         Shader brownShader = new LinearGradient(0,0,0,QunatisedPosition.itemSize*5,gradinetStartColor,gradientEndColor,TileMode.MIRROR);
         gradinetPaintBrown = new Paint();
         gradinetPaintBrown.setShader(brownShader);
@@ -154,13 +157,12 @@ class GameView extends SurfaceView {
             this.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen,canvas);
 
 
-            paint.setColor(Color.rgb(70, 70, 70));
+            paint.setColor(Theme.currentTheme.tertiaryColor ());
             paint.setTextSize((textHeight)/3);
 
             paint.setStrokeWidth(10);
 
             int itemSize =  QunatisedPosition.itemSize;
-            if (!isGameOver) {
                 int fullSnakeSize = data.snakePoints.size();
                 for (int i = 0; i < data.snakePoints.size(); i++) {
                     Point pixelPosition = data.snakePoints.get(i).convertToPoint();
@@ -179,14 +181,11 @@ class GameView extends SurfaceView {
                         this.drawRoundRect(pixelPosition.x + sizeReduction, pixelPosition.y + sizeReduction, pixelPosition.x + itemSize - sizeReduction, pixelPosition.y + itemSize - sizeReduction, roundXValue, roundYValue, paint,canvas);
                     }
                 }
-                paint.setColor(Color.rgb(70, 70, 70));
+                paint.setColor(Theme.currentTheme.tertiaryColor ());
                 canvas.drawText("Score = "+ valueOf(data.score), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.scoreBoardEndY - textHeight/8 , paint);
                 canvas.drawText("Hi-Score = " + valueOf(data.maxHighScore), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.scoreBoardEndY - (textHeight/8)*5 , paint);
 
-            }else{
-                canvas.drawText("Game Over: Double Tap to restart"  , QunatisedPosition.xOffset + QunatisedPosition.itemSize, QunatisedPosition.scoreBoardEndY - textHeight/4, paint);
-                data.resetGameData();
-            }
+
             canvas.drawText("Steps= "+ valueOf(data.stepsTakenLastFood) + "  Score Bonus = "+valueOf(data.foodValue), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.consoleEndY - textHeight/8 , paint);
             canvas.drawText(data.currentMission.objective(), QunatisedPosition.xOffset + QunatisedPosition.itemSize,  QunatisedPosition.consoleEndY - (textHeight/8)*5 , paint);
 
@@ -198,6 +197,14 @@ class GameView extends SurfaceView {
             // Draw everything to the screen
             ourHolder.unlockCanvasAndPost(canvas);
         }
+
+        if (GameStatus.isGameOver){
+            Intent intent = new Intent(((Activity)this.getContext()), PlayActivity.class);
+
+            ((Activity)this.getContext()).startActivity(intent);
+        }
+
+
 
     }
 
@@ -258,7 +265,7 @@ class GameView extends SurfaceView {
 
         int midX =  (x+x2)/2;
         int midY =  (y + y2)/2;
-        paint.setColor(Color.rgb(70,70,70));
+        paint.setColor(Theme.currentTheme.tertiaryColor ());
         canvas.drawCircle(midX,midY,(x2-x)/2,paint);
         paint.setColor(Color.rgb(183,28,28));
 
@@ -280,10 +287,7 @@ class GameView extends SurfaceView {
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
 
-        if (isGameOver){
-            gestureDetector.onTouchEvent(motionEvent);
-            return true;
-        }
+
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
 
 
