@@ -1,19 +1,12 @@
 package com.example.abhirajkumar.snake;
 
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RadialGradient;
-import android.graphics.Shader;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.content.Intent;
-import	android.widget.ImageButton;
 
-import com.example.abhirajkumar.snake.R;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import	android.widget.ImageButton;
+import com.example.abhirajkumar.snake.Theme.Theme;
+import android.graphics.drawable.GradientDrawable;
 
 public class PlayActivity extends AppCompatActivity {
 
@@ -23,9 +16,23 @@ public class PlayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
 
-        getWindow().getDecorView().setBackgroundColor(Color.rgb(120,200,100));
+        getWindow().getDecorView().setBackgroundColor( Theme.currentTheme.primaryColor ());
 
         ImageButton button = (ImageButton) findViewById(R.id.buttonPlay);
+        GradientDrawable shape =  new GradientDrawable();
+        shape.setCornerRadius( 16 );
+
+        // add some color
+        // You can add your random color generator here
+        // and set color
+
+            shape.setColor(Theme.currentTheme.secondaryColor ());
+        if(android.os.Build.VERSION.SDK_INT>=16) {
+            button.setBackground ( shape );
+        }
+
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

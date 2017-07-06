@@ -9,20 +9,46 @@
     tools:context="com.example.abhirajkumar.snake.PlayActivity">
 
 
-    <include
-        layout="@layout/content_play"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:ems="10"
+            android:inputType="none"
+            android:text="Score"
+            android:textSize="40dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
-    <ImageButton
-        android:id="@+id/buttonPlay"
-        android:layout_width="@android:dimen/notification_large_icon_width"
-        android:layout_height="@android:dimen/notification_large_icon_height"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:background="@android:color/holo_orange_dark"
-        android:backgroundTint="@android:color/holo_orange_dark"
-        app:srcCompat="@android:drawable/ic_media_play" />
+        <ImageButton
+            android:id="@+id/buttonPlay"
+            android:layout_width="@android:dimen/notification_large_icon_width"
+            android:layout_height="@android:dimen/notification_large_icon_height"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:background="@android:color/holo_orange_dark"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            app:srcCompat="@android:drawable/ic_media_play"/>
+
+        <TextView
+            android:id="@+id/highScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:ems="10"
+            android:textSize="40dp"
+
+            android:inputType="none"
+            android:text="High Score"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_anchorGravity="start"/>
+
+    </LinearLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

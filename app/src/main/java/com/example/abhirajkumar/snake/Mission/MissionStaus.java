@@ -1,4 +1,4 @@
-package com.example.abhirajkumar.snake;
+package com.example.abhirajkumar.snake.Mission;
 
 /**
  * Created by abhiraj.kumar on 7/1/17.

@@ -1,5 +1,4 @@
 package com.example.abhirajkumar.snake.Mission;
-import com.example.abhirajkumar.snake.MissionStaus;
 
 import static java.lang.String.*;
 
@@ -9,7 +8,7 @@ import static java.lang.String.*;
 public class FoodEatMissionInTurn extends  GameMission{
 
 
-    int turnUnderWhichFoodShouldBeEaten = 10;
+    int turnUnderWhichFoodShouldBeEaten = 20;
 
 
 

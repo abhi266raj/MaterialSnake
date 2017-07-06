@@ -1,7 +1,6 @@
 package com.example.abhirajkumar.snake.Mission;
 
 import com.example.abhirajkumar.snake.GameData;
-import com.example.abhirajkumar.snake.MissionStaus;
 
 /**
  * Created by abhiraj.kumar on 6/29/17.
