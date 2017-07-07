@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import	android.widget.ImageButton;
+
+import com.example.abhirajkumar.snake.GameBasics.GameStatus;
 import com.example.abhirajkumar.snake.Theme.Theme;
 import android.graphics.drawable.GradientDrawable;
 
@@ -18,17 +20,21 @@ public class PlayActivity extends AppCompatActivity {
 
         getWindow().getDecorView().setBackgroundColor( Theme.currentTheme.primaryColor ());
 
+        GradientDrawable shape2 =  new GradientDrawable();
+
+        ThemeBasedGradientPaint paintCreator = new ThemeBasedGradientPaint ();
+
+
         ImageButton button = (ImageButton) findViewById(R.id.buttonPlay);
+
         GradientDrawable shape =  new GradientDrawable();
         shape.setCornerRadius( 16 );
 
-        // add some color
-        // You can add your random color generator here
-        // and set color
 
             shape.setColor(Theme.currentTheme.secondaryColor ());
-        if(android.os.Build.VERSION.SDK_INT>=16) {
+        if(android.os.Build.VERSION.SDK_INT>=17) {
             button.setBackground ( shape );
+
         }
 
 

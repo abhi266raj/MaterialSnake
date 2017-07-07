@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.Context;
 import 	java.util.concurrent.TimeUnit;
 
+import com.example.abhirajkumar.snake.GameBasics.GameStatus;
 import com.example.abhirajkumar.snake.Mission.GameMission;
 import com.example.abhirajkumar.snake.Mission.MissionFactory;
 import com.example.abhirajkumar.snake.Mission.MissionStaus;
@@ -147,7 +148,7 @@ public class GameData {
         this.willMoveToQuantisedPoint(newPoint,gameView);
        if (GameStatus.isGameOver){
             try {
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.MILLISECONDS.sleep(500);
             }catch (InterruptedException e){
 
             }

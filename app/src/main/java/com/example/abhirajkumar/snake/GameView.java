@@ -16,6 +16,7 @@ import android.graphics.Shader.TileMode;
 import android.content.Intent;
 
 
+import com.example.abhirajkumar.snake.GameBasics.GameStatus;
 import com.example.abhirajkumar.snake.Theme.Theme;
 
 import static java.lang.String.*;
@@ -86,27 +87,10 @@ class GameView extends SurfaceView {
         // Set our boolean to true - game on!
         //playing = true;
         //makeSnake();
-        int x1 = QunatisedPosition.xOffset, y1 = QunatisedPosition.yOffset, x2 = QunatisedPosition.maximumXPoint,  y2 = QunatisedPosition.maximumYPoint;
-        //Shader shader = new LinearGradient(x1, y1, x2, y2,Color.rgb(40, 180, 70), Color.rgb(120, 200, 100), TileMode.REPEAT);
-        Shader shader;
-       // paint.setColor(Color.rgb(121, 85, 72));
+        ThemeBasedGradientPaint paintCreator = new ThemeBasedGradientPaint ();
+        gradinetPaintGreen = paintCreator.primaryColorPaint;
+        gradinetPaintBrown = paintCreator.secondaryColorPaint;
 
-        shader = new RadialGradient(x2/2,y2/2,QunatisedPosition.itemSize*10,Theme.currentTheme.primaryColorGradientVariant (),Theme.currentTheme.primaryColor (), TileMode.CLAMP);
-        gradinetPaintGreen = new Paint();
-        gradinetPaintGreen.setColor(Theme.currentTheme.primaryColor ());
-        gradinetPaintGreen.setShader(shader);
-        int gradientEndColor = Theme.currentTheme.secondaryColorGradientVariant();
-        int gradinetStartColor = Theme.currentTheme.secondaryColor ();
-        Shader brownShader = new LinearGradient(0,0,0,QunatisedPosition.itemSize*5,gradinetStartColor,gradientEndColor,TileMode.MIRROR);
-        gradinetPaintBrown = new Paint();
-        gradinetPaintBrown.setShader(brownShader);
-
-        //EmbossMaskFilter filter = new EmbossMaskFilter(new float[]{1, 1, 1}, 0.5f, 0.6f, 5f);
-
-        //Paint paintEmboss = new Paint();
-        //gradinetPaintGreen.setMaskFilter(filter);
-        //Bitmap.createBitmap(square,0,0,20,20);
-        //mDrawable.getPaint().setColor(0xff74AC23);
 
     }
 
@@ -115,6 +99,12 @@ class GameView extends SurfaceView {
 
     // Draw the newly updated scene
     public void draw(GameData data) {
+        if (GameStatus.isGameOver){
+            Intent intent = new Intent(((Activity)this.getContext()), PlayActivity.class);
+
+            ((Activity)this.getContext()).startActivity(intent);
+            return;
+        }
 
         if (ourHolder.getSurface().isValid()) {
 
@@ -191,11 +181,7 @@ class GameView extends SurfaceView {
             ourHolder.unlockCanvasAndPost(canvas);
         }
 
-        if (GameStatus.isGameOver){
-            Intent intent = new Intent(((Activity)this.getContext()), PlayActivity.class);
 
-            ((Activity)this.getContext()).startActivity(intent);
-        }
 
 
 
