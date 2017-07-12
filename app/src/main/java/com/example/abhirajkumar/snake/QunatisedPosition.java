@@ -65,7 +65,7 @@ public class QunatisedPosition{
     }
 
 
-    QunatisedPosition(int x,int y){
+    public QunatisedPosition(int x,int y){
         this.x = x;
         this.y = y;
        // resetItemSize();

@@ -9,11 +9,20 @@ import com.example.abhirajkumar.snake.GameData;
 
 public abstract  class GameMission {
 
-    public GameData data;
+    private GameData data;
     public MissionStaus currentMissionStatus = MissionStaus.OnGoing;
     public int missionNumber = 0;
     public abstract void foodEaten();
     public abstract String objective();
+    public void setData(GameData data){
+        this.data = data;
+    }
+
+    public GameData getData()
+    {
+        //include validation, logic, logging or whatever you like here
+        return this.data;
+    }
 }
 
 

@@ -13,7 +13,7 @@ public class MissionFactory {
     public  static GameMission getNewMission(GameData data){
         missionNumber++;
         GameMission mission =  new FoodEatMissionInTurn ();
-        mission.data = data;
+        mission.setData ( data );
         mission.missionNumber = missionNumber;
         return mission;
     }

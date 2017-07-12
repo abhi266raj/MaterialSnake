@@ -101,7 +101,7 @@ class GameView extends SurfaceView {
     public void draw(GameData data) {
         if (GameStatus.isGameOver){
             Intent intent = new Intent(((Activity)this.getContext()), PlayActivity.class);
-
+            intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             ((Activity)this.getContext()).startActivity(intent);
             return;
         }
@@ -123,6 +123,8 @@ class GameView extends SurfaceView {
             // Make the text a bit bigger
             paint.setTextSize(45);
 
+
+
             // Display the current fps on the screen
 //            if (shouldShowFPS) {
 //                canvas.drawText("FPS:" + fps, 20, 40, paint);
@@ -139,6 +141,11 @@ class GameView extends SurfaceView {
 
             this.drawRoundRect(food.position.xOffset, food.position.yOffset, food.position.maximumXPoint, food.position.maximumYPoint,food.position.itemSize/2,food.position.itemSize/2, gradinetPaintGreen,canvas);
 
+
+
+            paint.setColor ( Theme.currentTheme.quadnaryColor ());
+
+            this.drawDanger ( canvas,paint,data);
 
             paint.setColor(Theme.currentTheme.tertiaryColor ());
             paint.setTextSize((textHeight)/3);
@@ -177,6 +184,10 @@ class GameView extends SurfaceView {
             this.drawFood(foodPoint.x, foodPoint.y,foodPoint.x + itemSize, foodPoint.y + itemSize, paint,data);
 
 
+
+
+
+
             // Draw everything to the screen
             ourHolder.unlockCanvasAndPost(canvas);
         }
@@ -188,6 +199,14 @@ class GameView extends SurfaceView {
     }
 
 
+
+    public void drawDanger(Canvas canvas,Paint paint,GameData data){
+        for (int i = 0; i < data.dangerPoints.size(); i++) {
+            Point pixelPosition = data.dangerPoints.get(i).convertToPoint();
+            canvas.drawRect ( pixelPosition.x,pixelPosition.y,pixelPosition.x+QunatisedPosition.itemSize,pixelPosition.y+QunatisedPosition.itemSize,paint);
+        }
+
+    }
 
     public void drawBorder(Canvas canvas, Paint paint){
         //paint.setColor(Color.rgb(121, 85, 72));

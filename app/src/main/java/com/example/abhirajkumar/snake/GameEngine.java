@@ -44,7 +44,7 @@ public class GameEngine implements Runnable {
             // We can then use the result to
             // time animations and more.
             timeThisFrame = System.currentTimeMillis() - startFrameTime;
-            long desiredFrameRate = 10;
+            long desiredFrameRate = 5;
             long extraTime;
             extraTime = (1000 / desiredFrameRate) - timeThisFrame;
             if (extraTime > 0) {

@@ -28,7 +28,8 @@ public class GameData {
     long foodValue = 10;
     public long stepsTakenLastFood = 0;
 
-    ArrayList<QunatisedPosition> snakePoints;
+    public ArrayList<QunatisedPosition> snakePoints;
+    public ArrayList<QunatisedPosition> dangerPoints = new ArrayList<QunatisedPosition>(0);
     GameMission currentMission = MissionFactory.getNewMission(this);
 
 
